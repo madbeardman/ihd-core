@@ -151,8 +151,8 @@ Home Assistant  →  Rust Backend  →  Web UI
 ### 1. Clone the project
 
 ```bash
-git clone https://github.com/madbeardman/ihd-replacement
-cd ihd-replacement
+git clone https://github.com/madbeardman/ihd-core
+cd ihd-core
 ```
 
 
