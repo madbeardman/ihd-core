@@ -1,0 +1,78 @@
+/* =========================
+   Battery Panel (New)
+========================= */
+
+.battery-panel-body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  gap: 6px;
+}
+
+.battery-top {
+  text-align: center;
+}
+
+.battery-percentage {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.battery-kwh {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Battery visual */
+
+.battery-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-shell {
+  width: 34px;
+  height: 90px;
+  border-radius: 10px;
+  border: 2px solid var(--panel-border);
+  background: rgba(255,255,255,0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+/* battery tip */
+.battery-shell::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--panel-border);
+}
+
+/* fill */
+
+.battery-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--cheap);
+  transition: height 0.4s ease;
+  background: linear-gradient(to top, #22c55e, #4ade80);
+}
+
+/* status */
+
+.battery-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--cheap);
+}

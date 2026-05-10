@@ -1,0 +1,28 @@
+/* =========================
+   Solar Panel
+========================= */
+
+.solar-export-amount {
+  position: absolute;
+  left: 50%;
+  top: 75%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.solar-export-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.solar-export-value {
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cheap); /* green = good/export */
+}

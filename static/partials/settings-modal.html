@@ -1,0 +1,48 @@
+<!-- static/partials/settings-modal.html -->
+<div class="modal-backdrop" id="settings-backdrop" hidden></div>
+
+<section class="settings-modal" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title"
+    hidden>
+    <div class="settings-modal-header">
+        <h2 id="settings-title" class="settings-title">Settings</h2>
+    </div>
+
+    <div class="settings-modal-body">
+        <div class="settings-section">
+            <div class="settings-label">Display</div>
+            <div class="settings-value">
+                Choose how many Agile pricing slots are shown on the dashboard.
+            </div>
+
+            <div class="settings-field-label">
+                Agile chart range
+            </div>
+
+            <div class="settings-segmented" id="settings-agile-window-slots" role="group"
+                aria-label="Agile chart range">
+                <button type="button" class="settings-segment" data-value="24">12h</button>
+                <button type="button" class="settings-segment" data-value="36">18h</button>
+                <button type="button" class="settings-segment" data-value="48">24h</button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-label">System</div>
+            <div class="settings-value">More system settings later</div>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-label">Recommendations</div>
+            <div class="settings-value">Shower timings later</div>
+        </div>
+    </div>
+
+    <div class="settings-modal-footer">
+        <button class="settings-close-button" id="settings-close-button" type="button">
+            Close
+        </button>
+        <button class="settings-save-button" id="settings-save-button" type="button">
+            Save
+        </button>
+    </div>
+</section>

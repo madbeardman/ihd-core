@@ -1,0 +1,55 @@
+# =========================
+# Rust
+# =========================
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Keep Cargo.lock for binaries (your case), so comment out if needed
+#! Cargo.lock
+
+# =========================
+# Local data (IMPORTANT)
+# =========================
+/data/
+/data/agile/
+/data/*.json
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs / temp
+# =========================
+*.log
+*.tmp
+*.swp
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# =========================
+# Node / frontend (if added later)
+# =========================
+node_modules/
+dist/
+build/
+
+# =========================
+# Debug output
+# =========================
+debug/
+output.json

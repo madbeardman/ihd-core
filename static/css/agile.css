@@ -1,0 +1,199 @@
+/* =========================
+   Agile Panel
+========================= */
+
+.agile-panel {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 6px;
+  align-content: start;
+}
+
+.agile-chart-wrap {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr 12px;
+  gap: 1px;
+}
+
+/* =========================
+   Chart Base
+========================= */
+
+.agile-chart {
+  height: 108px;
+  position: relative;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+/* =========================
+   Positive-only mode
+========================= */
+
+.agile-chart.positive-only {
+  display: flex;
+  align-items: end;
+  gap: 5px;
+}
+
+.agile-chart.positive-only::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.agile-chart.positive-only .agile-bar {
+  flex: 1 1 0;
+  min-width: 10px;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  margin-bottom: 3px;
+  opacity: 0.95;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+/* =========================
+   Mixed mode (negative + positive)
+========================= */
+
+.agile-chart.mixed {
+  display: flex;
+  align-items: stretch;
+  gap: 5px;
+}
+
+.agile-chart.mixed::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.agile-bar-wrap {
+  flex: 1 1 0;
+  min-width: 10px;
+  position: relative;
+  height: 100%;
+}
+
+.agile-chart.mixed .agile-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0.95;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.agile-chart.mixed .agile-bar.positive {
+  bottom: calc(50% + 2px);
+  border-radius: 6px 6px 0 0;
+}
+
+.agile-chart.mixed .agile-bar.negative {
+  top: calc(50% + 2px);
+  border-radius: 0 0 6px 6px;
+}
+
+/* =========================
+   Colours
+========================= */
+
+.agile-bar.cheap {
+  background: var(--cheap);
+}
+
+.agile-bar.normal {
+  background: var(--normal);
+}
+
+.agile-bar.expensive {
+  background: var(--expensive);
+}
+
+.agile-bar.negative {
+  background: #8b5cf6;
+}
+
+/* =========================
+   Interaction
+========================= */
+
+.agile-bar:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   Tooltip
+========================= */
+
+.agile-bar::after {
+  content: attr(data-price);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.agile-chart.positive-only .agile-bar::after,
+.agile-chart.mixed .agile-bar.positive::after {
+  bottom: calc(100% + 4px);
+}
+
+.agile-chart.mixed .agile-bar.negative::after {
+  top: calc(100% + 4px);
+}
+
+.agile-bar:hover::after,
+.agile-bar.now::after {
+  opacity: 1;
+}
+
+/* =========================
+   Time Axis
+========================= */
+
+.agile-time-axis {
+  position: relative;
+  height: 13px;
+  color: var(--muted);
+  font-size: 0.6rem;
+  overflow: hidden;
+}
+
+.agile-time-label {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  line-height: 1;
+  top: -1px;
+  opacity: 0.65;
+}
+
+.agile-time-label.current {
+  color: var(--text);
+  opacity: 1;
+  font-weight: 500;
+}
+
+.agile-time-label:nth-child(3n) {
+  opacity: 0.9;
+}

@@ -1,0 +1,412 @@
+/* =========================
+   Theme / Base
+========================= */
+
+:root {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --panel: #171a21;
+  --panel-border: #2a2f3a;
+  --panel-soft: rgba(255, 255, 255, 0.02);
+  --panel-soft-border: rgba(255, 255, 255, 0.05);
+  --text: #f3f4f6;
+  --muted: #a1a1aa;
+  --cheap: #22c55e;
+  --normal: #f97316;
+  --expensive: #ef4444;
+  --now-outline: #ffffff;
+
+  --usage-green-bright: #22c55e;
+  --usage-green-soft: #16a34a;
+  --usage-orange: #f97316;
+  --usage-red: #ef4444;
+
+  --solar-green-dark: #15803d;
+  --solar-green-mid: #22c55e;
+  --solar-green-bright: #4ade80;
+
+  --main-gauge-width: 250px;
+  --main-gauge-height: 145px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family:
+    Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* =========================
+   Dashboard Layout
+========================= */
+
+.dashboard {
+  width: 100vw;
+  height: 100vh;
+  padding: 6px;
+  display: grid;
+  grid-template-rows: 34px 1fr;
+  gap: 6px;
+}
+
+.dashboard-main {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 210px 50px auto;
+  align-content: start;
+  gap: 6px;
+}
+
+.top-row {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1.45fr 1.45fr 1.45fr 0.9fr;
+  gap: 8px;
+}
+
+/* =========================
+   Costs Today Panel
+========================= */
+
+.costs-today-panel {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 4px;
+}
+
+.costs-today-breakdown {
+  display: grid;
+  align-content: center;
+  margin-top: 4px;
+}
+
+.costs-today-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  border-top: 1px solid var(--panel-soft-border);
+}
+
+.costs-today-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.costs-today-value {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.costs-budget-row {
+  display: grid;
+  grid-template-columns: 1fr 88px;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-top: 1px solid var(--panel-soft-border);
+}
+
+.costs-budget-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.costs-budget-value {
+  margin-top: 4px;
+  color: var(--text);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.costs-budget-caption {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1;
+}
+
+.costs-budget-gauge {
+  position: relative;
+  width: 88px;
+  height: 58px;
+}
+
+.costs-budget-gauge svg {
+  width: 88px;
+  height: 58px;
+  overflow: visible;
+}
+
+.costs-budget-track,
+.costs-budget-fill {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 12;
+}
+
+.costs-budget-track {
+  stroke: rgba(255, 255, 255, 0.12);
+}
+
+.costs-budget-fill {
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.costs-budget-fill.electricity {
+  stroke: #facc15;
+}
+
+.costs-budget-fill.gas {
+  stroke: #38bdf8;
+}
+
+.costs-budget-percent {
+  position: absolute;
+  left: 50%;
+  top: 68%;
+  transform: translate(-50%, -50%);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+/* =========================
+   Header
+========================= */
+
+.dashboard-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 6px;
+  padding: 0 2px;
+}
+
+.header-time {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.header-status {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-icon-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.icon-button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon-button:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: transparent;
+}
+
+.icon-button:active {
+  transform: scale(0.94);
+}
+
+.icon-svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke; /* keeps stroke consistent */
+}
+
+#settings-button .icon-svg {
+  transform: scale(0.9);
+}
+
+#history-button .icon-svg {
+  transform: translateX(-1px);
+}
+
+.icon-currency {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.95rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.9;
+  transform: translateY(1px);
+}
+
+.poll-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1f7a3a;
+  transition: background-color 1s ease;
+  margin-left: 14px;
+}
+
+.poll-indicator.pulse {
+  background: #4ade80;
+}
+
+.poll-indicator.error {
+  background: #ef4444;
+}
+
+/* =========================
+   Shared Panels
+========================= */
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 10px 14px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.panel-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.panel-subtitle {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.metric-panel {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 4px;
+}
+
+.panel-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.panel-value-muted {
+  color: var(--muted);
+}
+
+.panel-subtext {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.1;
+}
+
+.panel-body {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 4px;
+}
+
+.solar-export-icon {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  font-size: 4rem;
+  line-height: 1;
+  color: #facc15;
+  text-shadow: 0 0 14px rgba(250, 204, 21, 0.45);
+  pointer-events: none;
+}
+
+.solar-export-icon:not([hidden]) {
+  animation: solarExportPulse 5.0s ease-in-out infinite;
+}
+
+@keyframes solarExportPulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(250, 204, 21, 0.45);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+    text-shadow: 0 0 18px rgba(250, 204, 21, 0.75);
+  }
+}
+
+/* =========================
+   Shared Modal Backdrop
+========================= */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1000;
+}

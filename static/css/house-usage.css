@@ -1,0 +1,112 @@
+/* =========================
+   House Usage Panel
+========================= */
+
+#usage-panel .gauge-wrap-house {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: auto; 
+  transform: translateY(20px);
+  padding-top: 0;
+}
+
+#usage-panel .gauge-house-large {
+  width: 200px;
+}
+
+.usage-panel {
+  display: grid;
+  grid-template-rows: auto auto auto auto 1fr;
+  gap: 4px;
+}
+
+.usage-header-row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+}
+
+.usage-cost {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.usage-cost-in-gauge {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.usage-cost-value {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.usage-cost-rate {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1;
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.usage-flow-state {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cheap);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.usage-flow-export .usage-flow-icon {
+  background: var(--cheap);
+}
+
+.usage-flow-import .usage-flow-icon {
+  background: var(--expensive);
+}
+
+.usage-flow-idle .usage-flow-icon {
+  background: var(--muted);
+}
+
+.usage-flow-export {
+  color: var(--cheap);
+}
+
+.usage-flow-import {
+  color: var(--expensive);
+}
+
+.usage-flow-idle {
+  color: var(--muted);
+}
+
+.usage-flow-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cheap);
+  color: var(--panel);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.usage-flow-detail {
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1;
+}

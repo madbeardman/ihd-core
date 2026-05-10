@@ -1,0 +1,126 @@
+/* Settings modal */
+.settings-modal {
+  position: fixed;
+  inset: 36px 24px 24px 24px;
+  z-index: 1001;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.settings-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.settings-modal-body {
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.settings-section {
+  background: var(--panel-soft);
+  border: 1px solid var(--panel-soft-border);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.settings-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.settings-value {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.25;
+}
+
+.settings-field-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.settings-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-close-button,
+.settings-save-button {
+  min-width: 88px;
+  height: 36px;
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 14px;
+}
+
+.settings-close-button {
+  background: var(--panel-soft);
+}
+
+.settings-save-button {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.settings-save-button:active,
+.settings-close-button:active {
+  transform: scale(0.98);
+}
+
+.settings-segmented {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.settings-segment {
+  flex: 1;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-soft);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.settings-segment.active {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.settings-segment:active {
+  transform: scale(0.96);
+}
+

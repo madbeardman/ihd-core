@@ -1,0 +1,255 @@
+/* History modal */
+.history-modal {
+  position: fixed;
+  inset: 24px;
+  z-index: 1002;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.history-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.history-title-wrap {
+  display: grid;
+  gap: 4px;
+}
+
+.history-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.history-date {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.history-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.history-toggle-group,
+.history-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-toggle-button,
+.history-nav-button,
+.history-close-button {
+  height: 34px;
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  background: var(--panel-soft);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 12px;
+}
+
+.history-toggle-button.active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.history-toggle-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.history-modal-body {
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+.history-card {
+  background: var(--panel-soft);
+  border: 1px solid var(--panel-soft-border);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 8px;
+  min-height: 0;
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.history-card-title {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.history-card-subtitle {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.history-card-meta {
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  text-align: right;
+}
+
+.history-card-total,
+.history-card-standing {
+  font-size: 0.9rem;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.history-chart-container {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.history-y-axis {
+  width: 40px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: stretch;
+  justify-items: end;
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.history-y-max {
+  font-weight: 700;
+  min-height: 14px;
+}
+
+.history-y-min {
+  opacity: 0.65;
+  min-height: 12px;
+}
+
+.history-y-max,
+.history-y-min {
+  font-size: 0.68rem;
+}
+
+.history-y-rail {
+  width: 1px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  justify-self: end;
+  margin-right: 2px;
+}
+
+.history-chart-wrap {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr 14px;
+  gap: 2px;
+}
+
+.history-chart {
+  height: 100%;
+  min-height: 72px;
+  display: flex;
+  align-items: end;
+  gap: 2px;
+  position: relative;
+}
+
+.history-chart::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.history-bar {
+  flex: 1 1 0;
+  min-width: 4px;
+  border-radius: 4px 4px 0 0;
+  opacity: 0.95;
+  border: none;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.history-bar.electricity {
+  background: var(--normal);
+}
+
+.history-bar.gas {
+  background: var(--usage-green-soft);
+}
+
+.history-bar::after {
+  content: attr(data-value);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.64rem;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.history-bar:hover::after,
+.history-bar.selected::after {
+  opacity: 1;
+}
+
+.history-time-axis {
+  position: relative;
+  height: 12px;
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+
+.history-time-label {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.history-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

@@ -1,0 +1,83 @@
+<!-- static/partials/history-modal.html -->
+<div class="modal-backdrop" id="history-backdrop" hidden></div>
+
+<section class="history-modal" id="history-modal" role="dialog" aria-modal="true" aria-labelledby="history-title"
+    hidden>
+    <div class="history-modal-header">
+        <div class="history-title-wrap">
+            <h2 id="history-title" class="history-title">Usage History</h2>
+            <div class="history-date" id="history-date-label">Wed 1st April 2026</div>
+        </div>
+    </div>
+
+    <div class="history-toolbar">
+        <div class="history-toggle-group">
+            <button class="history-toggle-button active" id="history-metric-cost" type="button">Cost</button>
+        </div>
+
+        <div class="history-toggle-group">
+            <button class="history-toggle-button active" id="history-range-day" type="button">Day</button>
+            <button class="history-toggle-button" id="history-range-week" type="button">Week</button>
+            <button class="history-toggle-button" id="history-range-month" type="button">Month</button>
+        </div>
+
+        <div class="history-nav-group">
+            <button class="history-nav-button" id="history-prev-button" type="button"
+                aria-label="Previous period">‹</button>
+            <button class="history-nav-button" id="history-next-button" type="button"
+                aria-label="Next period">›</button>
+        </div>
+    </div>
+
+    <div class="history-modal-body">
+        <section class="history-card">
+            <div class="history-card-header">
+                <h3 class="history-card-title">Electricity</h3>
+
+                <div class="history-card-meta">
+                    <div class="history-card-total" id="history-electricity-total">Total £--</div>
+                </div>
+            </div>
+
+            <div class="history-chart-container">
+                <div class="history-y-axis">
+                    <div class="history-y-max" id="electricity-y-max">--</div>
+                    <div class="history-y-rail"></div>
+                    <div class="history-y-min">0</div>
+                </div>
+
+                <div class="history-chart-wrap">
+                    <div class="history-chart" id="history-electricity-chart"></div>
+                    <div class="history-time-axis" id="history-electricity-axis"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="history-card">
+            <div class="history-card-header">
+                <h3 class="history-card-title">Gas</h3>
+
+                <div class="history-card-meta">
+                    <div class="history-card-total" id="history-gas-total">Total £--</div>
+                </div>
+            </div>
+
+            <div class="history-chart-container">
+                <div class="history-y-axis">
+                    <div class="history-y-max" id="gas-y-max">--</div>
+                    <div class="history-y-rail"></div>
+                    <div class="history-y-min">0</div>
+                </div>
+
+                <div class="history-chart-wrap">
+                    <div class="history-chart" id="history-gas-chart"></div>
+                    <div class="history-time-axis" id="history-gas-axis"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="history-modal-footer">
+        <button class="history-close-button" id="history-close-button" type="button">Close</button>
+    </div>
+</section>

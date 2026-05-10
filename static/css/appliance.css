@@ -1,0 +1,64 @@
+/* =========================
+   Appliance Row
+========================= */
+
+.appliance-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 0;
+  padding: 6px 14px;
+  min-height: 0;
+}
+
+.appliance-item {
+  display: grid;
+  grid-template-columns: 32px auto 1fr;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 14px;
+  border-right: 1px solid var(--panel-soft-border);
+}
+
+.appliance-item:last-child {
+  border-right: none;
+}
+
+.appliance-icon {
+  width: 26px;
+  height: 26px;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: 5px;
+  color: rgba(255, 255, 255, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.appliance-label {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.appliance-label::after {
+  content: "";
+}
+
+.appliance-value {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+.appliance-value.running {
+  color: var(--cheap);
+  font-weight: 900;
+}
