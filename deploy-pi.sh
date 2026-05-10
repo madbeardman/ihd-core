@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PI_HOST="colinr@home-ihd.local"
+PI_HOST="home-core"
 PI_APP_DIR="~/agile-fetcher"
 
 FORCE_ENV=false

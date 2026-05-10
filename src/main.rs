@@ -8,17 +8,17 @@ use tokio::sync::RwLock;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::services::ServeDir;
 
-use agile_fetcher::app_state::AppState;
-use agile_fetcher::app_state::RefreshState;
-use agile_fetcher::dashboard::{fetch_and_store_latest_agile, load_dashboard_state};
-use agile_fetcher::handlers::{
+use ihd_core::app_state::AppState;
+use ihd_core::app_state::RefreshState;
+use ihd_core::dashboard::{fetch_and_store_latest_agile, load_dashboard_state};
+use ihd_core::handlers::{
     get_agile, get_dashboard, get_history_day, get_history_month, get_history_week,
     get_history_yesterday, get_settings, index, update_settings,
 };
-use agile_fetcher::history;
-use agile_fetcher::home_assistant::load_ha_config;
-use agile_fetcher::scheduler::{start_home_assistant_polling, start_scheduler};
-use agile_fetcher::settings;
+use ihd_core::history;
+use ihd_core::home_assistant::load_ha_config;
+use ihd_core::scheduler::{start_home_assistant_polling, start_scheduler};
+use ihd_core::settings;
 
 #[tokio::main]
 async fn main() {
@@ -101,7 +101,6 @@ async fn main() {
         .expect("Failed to bind server");
 
     println!("----------------------------------------");
-    println!("Frontend:      http://0.0.0.0:3000");
     println!("Dashboard API: http://0.0.0.0:3000/api/dashboard");
     println!("Agile API:     http://0.0.0.0:3000/api/agile");
     println!("Settings API:  http://0.0.0.0:3000/api/settings");

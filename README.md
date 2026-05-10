@@ -1,4 +1,4 @@
-# ⚡ Home Energy Dashboard (IHD)
+# ⚡ In-Home Energy Dashboard Core (IHD-Core)
 
 > Built for a dedicated always-on home display — fast, local-first, and
 > energy-aware.

@@ -1,8 +1,8 @@
 [package]
-name = "agile-fetcher"
+name = "ihd-core"
 version = "0.1.0"
 edition = "2021"
-default-run = "agile-fetcher"
+default-run = "ihd-core"
 
 [dependencies]
 

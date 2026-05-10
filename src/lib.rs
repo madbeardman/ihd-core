@@ -1,7 +1,9 @@
 pub mod agile;
+pub mod api;
 pub mod app_state;
 pub mod dashboard;
 pub mod handlers;
+pub mod heating;
 pub mod history;
 pub mod home_assistant;
 pub mod models;

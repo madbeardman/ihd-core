@@ -3,9 +3,9 @@ use std::path::PathBuf;
 use chrono::{Duration, Local, NaiveDate};
 use dotenvy::dotenv;
 
-use agile_fetcher::agile::fetch_and_store_agile_for_day;
-use agile_fetcher::history::{fetch_and_store_history_for_day, load_octopus_config};
-use agile_fetcher::home_assistant::load_ha_config;
+use ihd_core::agile::fetch_and_store_agile_for_day;
+use ihd_core::history::{fetch_and_store_history_for_day, load_octopus_config};
+use ihd_core::home_assistant::load_ha_config;
 
 #[tokio::main]
 async fn main() {
