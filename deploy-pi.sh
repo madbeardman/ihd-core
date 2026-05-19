@@ -2,7 +2,8 @@
 set -e
 
 PI_HOST="home-core"
-PI_APP_DIR="~/agile-fetcher"
+PI_APP_DIR="~/ihd-core"
+SERVICE_NAME="ihd-core"
 
 FORCE_ENV=false
 if [[ "$1" == "--force-env" ]]; then
@@ -41,9 +42,14 @@ ssh "${PI_HOST}" "
   cargo build --release
 "
 
-echo "==> Restarting IHD device..."
+echo "==> Restarting ihd-core service..."
 ssh "${PI_HOST}" "
-  sudo reboot
+  sudo systemctl restart ${SERVICE_NAME}
+"
+
+echo "==> Checking service status..."
+ssh "${PI_HOST}" "
+  sudo systemctl status ${SERVICE_NAME} --no-pager
 "
 
 echo "==> Done."

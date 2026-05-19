@@ -1,6 +1,5 @@
 use axum::{
     extract::{Query, State},
-    response::Html,
     Json,
 };
 use chrono::NaiveDate;
@@ -122,24 +121,6 @@ pub async fn get_history_day(
     })?;
 
     Ok(Json(history))
-}
-
-pub async fn index(State(state): State<AppState>) -> Html<String> {
-    let html = include_str!("../static/index.html");
-
-    let dev_mode = {
-        let dashboard = state.dashboard.read().await;
-        if dashboard.dev_mode {
-            "true"
-        } else {
-            "false"
-        }
-    };
-
-    Html(html.replace(
-        r#"data-dev-mode="false""#,
-        &format!(r#"data-dev-mode="{}""#, dev_mode),
-    ))
 }
 
 pub async fn get_history_week(

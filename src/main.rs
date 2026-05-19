@@ -6,14 +6,13 @@ use axum::{routing::get, Router};
 use dotenvy::dotenv;
 use tokio::sync::RwLock;
 use tower_http::cors::{Any, CorsLayer};
-use tower_http::services::ServeDir;
 
 use ihd_core::app_state::AppState;
 use ihd_core::app_state::RefreshState;
 use ihd_core::dashboard::{fetch_and_store_latest_agile, load_dashboard_state};
 use ihd_core::handlers::{
     get_agile, get_dashboard, get_history_day, get_history_month, get_history_week,
-    get_history_yesterday, get_settings, index, update_settings,
+    get_history_yesterday, get_settings, update_settings,
 };
 use ihd_core::history;
 use ihd_core::home_assistant::load_ha_config;
@@ -91,8 +90,6 @@ async fn main() {
         .route("/api/history/day", get(get_history_day))
         .route("/api/history/week", get(get_history_week))
         .route("/api/history/month", get(get_history_month))
-        .route("/", get(index))
-        .nest_service("/static", ServeDir::new("static"))
         .with_state(state.clone())
         .layer(cors);
 
