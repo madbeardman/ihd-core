@@ -222,7 +222,7 @@ pub fn get_poll_interval_seconds() -> u64 {
     let hour = now.hour();
 
     if (7..22).contains(&hour) {
-        10
+        6
     } else {
         20
     }
