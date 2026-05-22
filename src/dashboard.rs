@@ -12,7 +12,7 @@ use crate::home_assistant::{
 };
 use crate::models::{
     ApplianceRecommendation, ApplianceRecommendations, DashboardState, DeviceCostSummary,
-    TopCostDevices, UsageRotationMetrics,
+    DevicePowerSummary, TopCostDevices, TopPowerDevices, UsageRotationMetrics,
 };
 
 type AppError = Box<dyn std::error::Error + Send + Sync>;
@@ -63,6 +63,12 @@ pub async fn load_dashboard_state(
                     today: TopCostDevices { items: vec![] },
                     yesterday: TopCostDevices { items: vec![] },
                     month: TopCostDevices { items: vec![] },
+                },
+                device_power: DevicePowerSummary {
+                    current: TopPowerDevices { items: vec![] },
+                    today: TopPowerDevices { items: vec![] },
+                    yesterday: TopPowerDevices { items: vec![] },
+                    month: TopPowerDevices { items: vec![] },
                 },
             }
         }

@@ -63,3 +63,22 @@ pub struct DeviceCostSummary {
     pub yesterday: TopCostDevices,
     pub month: TopCostDevices,
 }
+
+#[derive(Debug, Clone, Serialize)]
+pub struct PowerDeviceItem {
+    pub name: String,
+    pub power_w: f64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct TopPowerDevices {
+    pub items: Vec<PowerDeviceItem>,
+}
+
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DevicePowerSummary {
+    pub current: TopPowerDevices,
+    pub today: TopPowerDevices,
+    pub yesterday: TopPowerDevices,
+    pub month: TopPowerDevices,
+}

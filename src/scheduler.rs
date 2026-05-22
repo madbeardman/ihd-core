@@ -10,7 +10,9 @@ use crate::dashboard::{
 };
 use crate::history::{fetch_and_store_yesterday_history, OctopusConfig};
 use crate::home_assistant::{extract_live_state, fetch_all_states, log_dev, HaConfig, LiveState};
-use crate::models::{DeviceCostSummary, FetchMarker, TopCostDevices};
+use crate::models::{
+    DeviceCostSummary, DevicePowerSummary, FetchMarker, TopCostDevices, TopPowerDevices,
+};
 
 pub fn start_scheduler(
     state: AppState,
@@ -119,6 +121,12 @@ pub fn start_home_assistant_polling(state: AppState, ha_config: HaConfig) {
                             today: TopCostDevices { items: vec![] },
                             yesterday: TopCostDevices { items: vec![] },
                             month: TopCostDevices { items: vec![] },
+                        },
+                        device_power: DevicePowerSummary {
+                            current: TopPowerDevices { items: vec![] },
+                            today: TopPowerDevices { items: vec![] },
+                            yesterday: TopPowerDevices { items: vec![] },
+                            month: TopPowerDevices { items: vec![] },
                         },
                     }
                 }

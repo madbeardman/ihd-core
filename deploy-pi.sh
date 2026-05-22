@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PI_HOST="home-core"
+PI_HOST="home-ihd"
 PI_APP_DIR="~/ihd-core"
 SERVICE_NAME="ihd-core"
 

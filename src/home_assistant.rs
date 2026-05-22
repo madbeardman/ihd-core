@@ -3,7 +3,10 @@ use std::cmp::Ordering;
 use serde::Deserialize;
 use serde_json::Value;
 
-use crate::models::{CostDeviceItem, DeviceCostSummary, TopCostDevices};
+use crate::models::{
+    CostDeviceItem, DeviceCostSummary, DevicePowerSummary, PowerDeviceItem, TopCostDevices,
+    TopPowerDevices,
+};
 
 type AppError = Box<dyn std::error::Error + Send + Sync>;
 
@@ -30,6 +33,7 @@ pub struct LiveState {
     pub washing_machine_power_w: Option<f64>,
     pub tumble_dryer_power_w: Option<f64>,
     pub device_costs: DeviceCostSummary,
+    pub device_power: DevicePowerSummary,
     pub electricity_cost_today_gbp: Option<f64>,
     pub octopus_current_demand_w: Option<f64>,
     pub gas_cost_today_gbp: Option<f64>,
@@ -143,6 +147,8 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
         .map(|state| parse_top_cost_devices(&state.attributes))
         .unwrap_or_else(empty_top_cost_devices);
 
+    let current_power = build_current_power_devices(states);
+
     LiveState {
         house_power_w: get_numeric_state(states, "sensor.total_power_being_used"),
         solar_generation_w: get_numeric_state(states, "sensor.solar_panel_led_sensor_power"),
@@ -167,6 +173,12 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
             yesterday: yesterday_costs,
             month: month_costs,
         },
+        device_power: DevicePowerSummary {
+            current: current_power,
+            today: empty_top_power_devices(),
+            yesterday: empty_top_power_devices(),
+            month: empty_top_power_devices(),
+        },
     }
 }
 
@@ -178,4 +190,51 @@ pub fn log_dev(config: &HaConfig, message: impl AsRef<str>) {
     if config.dev_mode {
         println!("{}", message.as_ref());
     }
+}
+
+fn empty_top_power_devices() -> TopPowerDevices {
+    TopPowerDevices { items: Vec::new() }
+}
+
+fn power_item(name: &str, power_w: Option<f64>) -> Option<PowerDeviceItem> {
+    let power_w = power_w.unwrap_or(0.0);
+
+    if power_w <= 0.0 {
+        return None;
+    }
+
+    Some(PowerDeviceItem {
+        name: name.to_string(),
+        power_w,
+    })
+}
+
+fn build_current_power_devices(states: &[HaState]) -> TopPowerDevices {
+    let mut items = Vec::new();
+
+    let devices = [
+        ("Network Hub", "sensor.network_hub_power"),
+        ("Office Hub", "sensor.office_hub_power"),
+        ("TV Hub", "sensor.tv_hub_power"),
+        ("TV Accessories", "sensor.tv_accessories_hub_power"),
+        ("Dishwasher", "sensor.dishwasher_power"),
+        ("Washing Machine", "sensor.washing_machine_power"),
+        ("Tumble Dryer", "sensor.tumble_dryer_power"),
+        ("Garage Fridge", "sensor.garage_fridge_power"),
+        ("Kitchen Fridge", "sensor.kitchen_fridge_power"),
+        (
+            "Kitchen Small Appliances",
+            "sensor.kitchen_small_appliances_power",
+        ),
+    ];
+
+    for (name, entity_id) in devices {
+        if let Some(item) = power_item(name, get_numeric_state(states, entity_id)) {
+            items.push(item);
+        }
+    }
+
+    items.sort_by(|a, b| b.power_w.partial_cmp(&a.power_w).unwrap_or(Ordering::Equal));
+
+    TopPowerDevices { items }
 }
