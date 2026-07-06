@@ -151,7 +151,7 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
 
     LiveState {
         house_power_w: get_numeric_state(states, "sensor.total_power_being_used"),
-        solar_generation_w: get_numeric_state(states, "sensor.solar_panel_led_sensor_power"),
+        solar_generation_w: get_numeric_state(states, "sensor.solis_s6_gr1p_active_power"),
         dishwasher_power_w: get_numeric_state(states, "sensor.dishwasher_power"),
         washing_machine_power_w: get_numeric_state(states, "sensor.washing_machine_power"),
         tumble_dryer_power_w: get_numeric_state(states, "sensor.tumble_dryer_power"),
