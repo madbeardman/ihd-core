@@ -115,6 +115,7 @@ pub fn start_home_assistant_polling(state: AppState, ha_config: HaConfig) {
                         tumble_dryer_power_w: None,
                         electricity_cost_today_gbp: None,
                         octopus_current_demand_w: None,
+                        consoles_power_w: None,
                         gas_cost_today_gbp: None,
                         device_costs: DeviceCostSummary {
                             current: TopCostDevices { items: vec![] },
@@ -166,10 +167,15 @@ pub fn start_home_assistant_polling(state: AppState, ha_config: HaConfig) {
                 .map(|v| format!("{v:.2}W"))
                 .unwrap_or_else(|| "unavailable".to_string());
 
+            let consoles_text = live
+                .consoles_power_w
+                .map(|v| format!("{v:.2}W"))
+                .unwrap_or_else(|| "unavailable".to_string());
+
             log_dev(
                 &ha_config,
                 format!(
-                    "[{now}] HA poll | house: {house_text} | solar: {solar_text} | dishwasher: {dishwasher_text} | washer: {washer_text} | dryer: {dryer_text}"
+                    "[{now}] HA poll | house: {house_text} | solar: {solar_text} | dishwasher: {dishwasher_text} | washer: {washer_text} | dryer: {dryer_text} | consoles: {consoles_text}"
                 ),
             );
 

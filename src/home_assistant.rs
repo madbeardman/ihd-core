@@ -32,6 +32,7 @@ pub struct LiveState {
     pub dishwasher_power_w: Option<f64>,
     pub washing_machine_power_w: Option<f64>,
     pub tumble_dryer_power_w: Option<f64>,
+    pub consoles_power_w: Option<f64>,
     pub device_costs: DeviceCostSummary,
     pub device_power: DevicePowerSummary,
     pub electricity_cost_today_gbp: Option<f64>,
@@ -155,6 +156,7 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
         dishwasher_power_w: get_numeric_state(states, "sensor.dishwasher_power"),
         washing_machine_power_w: get_numeric_state(states, "sensor.washing_machine_power"),
         tumble_dryer_power_w: get_numeric_state(states, "sensor.tumble_dryer_power"),
+        consoles_power_w: get_numeric_state(states, "sensor.generic_plug_power"),
         electricity_cost_today_gbp: get_numeric_state(
             states,
             "sensor.octopus_energy_electricity_21e5386139_2334051220712_current_accumulative_cost",
@@ -221,6 +223,7 @@ fn build_current_power_devices(states: &[HaState]) -> TopPowerDevices {
         ("Washing Machine", "sensor.washing_machine_power"),
         ("Tumble Dryer", "sensor.tumble_dryer_power"),
         ("Garage Fridge", "sensor.garage_fridge_power"),
+        ("Consoles", "sensor.generic_plug_power"),
         ("Kitchen Fridge", "sensor.kitchen_fridge_power"),
         (
             "Kitchen Small Appliances",
