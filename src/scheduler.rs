@@ -9,7 +9,9 @@ use crate::dashboard::{
     get_poll_interval_seconds, load_dashboard_state,
 };
 use crate::history::{fetch_and_store_yesterday_history, OctopusConfig};
-use crate::home_assistant::{extract_live_state, fetch_all_states, log_dev, HaConfig, LiveState};
+use crate::home_assistant::{
+    extract_live_state, fetch_all_states, log_dev, BatteryStatus, HaConfig, LiveState,
+};
 use crate::models::{
     DeviceCostSummary, DevicePowerSummary, FetchMarker, TopCostDevices, TopPowerDevices,
 };
@@ -117,6 +119,7 @@ pub fn start_home_assistant_polling(state: AppState, ha_config: HaConfig) {
                         battery_soc_percent: None,
                         battery_charge_w: None,
                         battery_discharge_w: None,
+                        battery_status: BatteryStatus::Unavailable,
                         dishwasher_power_w: None,
                         washing_machine_power_w: None,
                         tumble_dryer_power_w: None,

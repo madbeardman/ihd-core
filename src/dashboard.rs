@@ -8,7 +8,7 @@ use crate::agile::{
 };
 
 use crate::home_assistant::{
-    extract_live_state, fetch_all_states, is_appliance_running, HaConfig, LiveState,
+    extract_live_state, fetch_all_states, is_appliance_running, BatteryStatus, HaConfig, LiveState,
 };
 use crate::models::{
     ApplianceRecommendation, ApplianceRecommendations, DashboardState, DeviceCostSummary,
@@ -59,6 +59,7 @@ pub async fn load_dashboard_state(
                 battery_soc_percent: None,
                 battery_charge_w: None,
                 battery_discharge_w: None,
+                battery_status: BatteryStatus::Unavailable,
                 dishwasher_power_w: None,
                 washing_machine_power_w: None,
                 tumble_dryer_power_w: None,

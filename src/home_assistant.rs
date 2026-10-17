@@ -25,6 +25,15 @@ pub struct HaState {
     pub attributes: serde_json::Map<String, Value>,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum BatteryStatus {
+    Charging,
+    Discharging,
+    Idle,
+    Unavailable,
+}
+
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct LiveState {
     pub house_power_w: Option<f64>,
@@ -36,6 +45,7 @@ pub struct LiveState {
     pub battery_soc_percent: Option<f64>,
     pub battery_charge_w: Option<f64>,
     pub battery_discharge_w: Option<f64>,
+    pub battery_status: BatteryStatus,
 
     pub dishwasher_power_w: Option<f64>,
     pub washing_machine_power_w: Option<f64>,
@@ -167,6 +177,11 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
         _ => None,
     };
 
+    let battery_charge_w = get_numeric_state(states, "sensor.solis_s6_eh1p_battery_charge_power");
+    let battery_discharge_w =
+        get_numeric_state(states, "sensor.solis_s6_eh1p_battery_discharge_power");
+    let battery_status = calculate_battery_status(battery_charge_w, battery_discharge_w);
+
     LiveState {
         house_power_w: get_numeric_state(states, "sensor.total_power_being_used"),
 
@@ -182,13 +197,13 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
         battery_soc_percent: get_numeric_state(states, "sensor.solis_s6_eh1p_battery_soc"),
 
         // Dyness battery - Charging power (W)
-        battery_charge_w: get_numeric_state(states, "sensor.solis_s6_eh1p_battery_charge_power"),
+        battery_charge_w: battery_charge_w,
 
         // Dyness battery - Discharging power (W)
-        battery_discharge_w: get_numeric_state(
-            states,
-            "sensor.solis_s6_eh1p_battery_discharge_power",
-        ),
+        battery_discharge_w: battery_discharge_w,
+
+        // Dyness battery - Status (Charging, Discharging, Idle, Unavailable)
+        battery_status: battery_status,
 
         // Appliances
         dishwasher_power_w: get_numeric_state(states, "sensor.dishwasher_power"),
@@ -224,6 +239,34 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
             yesterday: empty_top_power_devices(),
             month: empty_top_power_devices(),
         },
+    }
+}
+
+pub fn calculate_battery_status(charge_w: Option<f64>, discharge_w: Option<f64>) -> BatteryStatus {
+    const THRESHOLD_W: f64 = 20.0;
+
+    let (Some(charge), Some(discharge)) = (charge_w, discharge_w) else {
+        return BatteryStatus::Unavailable;
+    };
+
+    if !charge.is_finite() || !discharge.is_finite() {
+        return BatteryStatus::Unavailable;
+    }
+
+    if charge < 0.0 || discharge < 0.0 {
+        return BatteryStatus::Unavailable;
+    }
+
+    if charge > THRESHOLD_W && discharge > THRESHOLD_W {
+        return BatteryStatus::Unavailable;
+    }
+
+    if charge > THRESHOLD_W {
+        BatteryStatus::Charging
+    } else if discharge > THRESHOLD_W {
+        BatteryStatus::Discharging
+    } else {
+        BatteryStatus::Idle
     }
 }
 
@@ -283,4 +326,73 @@ fn build_current_power_devices(states: &[HaState]) -> TopPowerDevices {
     items.sort_by(|a, b| b.power_w.partial_cmp(&a.power_w).unwrap_or(Ordering::Equal));
 
     TopPowerDevices { items }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn battery_charging() {
+        assert_eq!(
+            calculate_battery_status(Some(234.0), Some(0.0)),
+            BatteryStatus::Charging
+        );
+    }
+
+    #[test]
+    fn battery_discharging() {
+        assert_eq!(
+            calculate_battery_status(Some(0.0), Some(450.0)),
+            BatteryStatus::Discharging
+        );
+    }
+
+    #[test]
+    fn battery_idle() {
+        assert_eq!(
+            calculate_battery_status(Some(0.0), Some(0.0)),
+            BatteryStatus::Idle
+        );
+    }
+
+    #[test]
+    fn battery_below_threshold() {
+        assert_eq!(
+            calculate_battery_status(Some(15.0), Some(0.0)),
+            BatteryStatus::Idle
+        );
+    }
+
+    #[test]
+    fn battery_at_threshold() {
+        assert_eq!(
+            calculate_battery_status(Some(20.0), Some(0.0)),
+            BatteryStatus::Idle
+        );
+    }
+
+    #[test]
+    fn battery_unavailable() {
+        assert_eq!(
+            calculate_battery_status(None, Some(0.0)),
+            BatteryStatus::Unavailable
+        );
+    }
+
+    #[test]
+    fn battery_invalid_reading() {
+        assert_eq!(
+            calculate_battery_status(Some(f64::NAN), Some(0.0)),
+            BatteryStatus::Unavailable
+        );
+    }
+
+    #[test]
+    fn battery_conflicting_readings() {
+        assert_eq!(
+            calculate_battery_status(Some(200.0), Some(150.0)),
+            BatteryStatus::Unavailable
+        );
+    }
 }
