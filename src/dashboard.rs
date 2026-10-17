@@ -52,6 +52,13 @@ pub async fn load_dashboard_state(
             LiveState {
                 house_power_w: None,
                 solar_generation_w: None,
+                // Second Solis inverter
+                solar_hybrid_w: None,
+                // Dyness battery
+                total_solar_generation_w: None,
+                battery_soc_percent: None,
+                battery_charge_w: None,
+                battery_discharge_w: None,
                 dishwasher_power_w: None,
                 washing_machine_power_w: None,
                 tumble_dryer_power_w: None,

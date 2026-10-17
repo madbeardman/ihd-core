@@ -28,7 +28,15 @@ pub struct HaState {
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct LiveState {
     pub house_power_w: Option<f64>,
-    pub solar_generation_w: Option<f64>,
+    pub solar_generation_w: Option<f64>, // Solis S6-GR1P - Main solar generation
+    pub solar_hybrid_w: Option<f64>,     // Solis S6-EH1P - Additional solar generation
+    pub total_solar_generation_w: Option<f64>, // Combined solar generation (main + additional)
+
+    // Solis S6-EH1P - Dyness battery
+    pub battery_soc_percent: Option<f64>,
+    pub battery_charge_w: Option<f64>,
+    pub battery_discharge_w: Option<f64>,
+
     pub dishwasher_power_w: Option<f64>,
     pub washing_machine_power_w: Option<f64>,
     pub tumble_dryer_power_w: Option<f64>,
@@ -150,13 +158,45 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
 
     let current_power = build_current_power_devices(states);
 
+    let solar_generation_w = get_numeric_state(states, "sensor.solis_s6_gr1p_active_power");
+
+    let solar_hybrid_w = get_numeric_state(states, "sensor.solis_s6_eh1p_total_pv_power");
+
+    let total_solar_generation_w = match (solar_generation_w, solar_hybrid_w) {
+        (Some(original), Some(hybrid)) => Some(original + hybrid),
+        _ => None,
+    };
+
     LiveState {
         house_power_w: get_numeric_state(states, "sensor.total_power_being_used"),
+
+        // Solar generation - Original Solis inverter
         solar_generation_w: get_numeric_state(states, "sensor.solis_s6_gr1p_active_power"),
+
+        // Solar generation - New Solis S6-EH1P inverter (PV2)
+        solar_hybrid_w: get_numeric_state(states, "sensor.solis_s6_eh1p_total_pv_power"),
+
+        total_solar_generation_w: total_solar_generation_w,
+
+        // Dyness battery - State of charge (%)
+        battery_soc_percent: get_numeric_state(states, "sensor.solis_s6_eh1p_battery_soc"),
+
+        // Dyness battery - Charging power (W)
+        battery_charge_w: get_numeric_state(states, "sensor.solis_s6_eh1p_battery_charge_power"),
+
+        // Dyness battery - Discharging power (W)
+        battery_discharge_w: get_numeric_state(
+            states,
+            "sensor.solis_s6_eh1p_battery_discharge_power",
+        ),
+
+        // Appliances
         dishwasher_power_w: get_numeric_state(states, "sensor.dishwasher_power"),
         washing_machine_power_w: get_numeric_state(states, "sensor.washing_machine_power"),
         tumble_dryer_power_w: get_numeric_state(states, "sensor.tumble_dryer_power"),
         consoles_power_w: get_numeric_state(states, "sensor.generic_plug_power"),
+
+        // Octopus Energy
         electricity_cost_today_gbp: get_numeric_state(
             states,
             "sensor.octopus_energy_electricity_21e5386139_2334051220712_current_accumulative_cost",
@@ -169,12 +209,15 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
             states,
             "sensor.octopus_energy_electricity_21e5386139_2334051220712_current_demand",
         ),
+
+        // Device summaries
         device_costs: DeviceCostSummary {
             current: current_costs,
             today: today_costs,
             yesterday: yesterday_costs,
             month: month_costs,
         },
+
         device_power: DevicePowerSummary {
             current: current_power,
             today: empty_top_power_devices(),

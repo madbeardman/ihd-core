@@ -110,6 +110,13 @@ pub fn start_home_assistant_polling(state: AppState, ha_config: HaConfig) {
                     LiveState {
                         house_power_w: None,
                         solar_generation_w: None,
+                        // Second Solis inverter
+                        solar_hybrid_w: None,
+                        total_solar_generation_w: None,
+                        // Dyness battery
+                        battery_soc_percent: None,
+                        battery_charge_w: None,
+                        battery_discharge_w: None,
                         dishwasher_power_w: None,
                         washing_machine_power_w: None,
                         tumble_dryer_power_w: None,
@@ -175,7 +182,21 @@ pub fn start_home_assistant_polling(state: AppState, ha_config: HaConfig) {
             log_dev(
                 &ha_config,
                 format!(
-                    "[{now}] HA poll | house: {house_text} | solar: {solar_text} | dishwasher: {dishwasher_text} | washer: {washer_text} | dryer: {dryer_text} | consoles: {consoles_text}"
+                    "[{now}] HA poll | \
+                    house: {house_text} | \
+                    solar: {solar_text} | \
+                    solar PV2: {:?}W | \
+                    battery SOC: {:?}% | \
+                    battery charge: {:?}W | \
+                    battery discharge: {:?}W | \
+                    dishwasher: {dishwasher_text} | \
+                    washer: {washer_text} | \
+                    dryer: {dryer_text} | \
+                    consoles: {consoles_text}",
+                    live.solar_hybrid_w,
+                    live.battery_soc_percent,
+                    live.battery_charge_w,
+                    live.battery_discharge_w,
                 ),
             );
 
