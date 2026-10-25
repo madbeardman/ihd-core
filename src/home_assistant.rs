@@ -55,6 +55,7 @@ pub struct LiveState {
     pub device_power: DevicePowerSummary,
     pub electricity_cost_today_gbp: Option<f64>,
     pub octopus_current_demand_w: Option<f64>,
+    pub grid_power_net_w: Option<f64>,
     pub gas_cost_today_gbp: Option<f64>,
 }
 
@@ -224,6 +225,8 @@ pub fn extract_live_state(states: &[HaState]) -> LiveState {
             states,
             "sensor.octopus_energy_electricity_21e5386139_2334051220712_current_demand",
         ),
+
+        grid_power_net_w: get_numeric_state(states, "sensor.solis_s6_eh1p_grid_power_net"),
 
         // Device summaries
         device_costs: DeviceCostSummary {

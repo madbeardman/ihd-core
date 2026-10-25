@@ -65,6 +65,7 @@ pub async fn load_dashboard_state(
                 tumble_dryer_power_w: None,
                 electricity_cost_today_gbp: None,
                 octopus_current_demand_w: None,
+                grid_power_net_w: None,
                 consoles_power_w: None,
                 gas_cost_today_gbp: None,
                 device_costs: DeviceCostSummary {
