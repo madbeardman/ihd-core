@@ -307,7 +307,7 @@ fn build_current_power_devices(states: &[HaState]) -> TopPowerDevices {
         ("Network Hub", "sensor.network_hub_power"),
         ("Office Hub", "sensor.office_hub_power"),
         ("TV Hub", "sensor.tv_hub_power"),
-        ("TV Accessories", "sensor.tv_accessories_hub_power"),
+        ("Music Centre", "sensor.tv_accessories_hub_power"),
         ("Dishwasher", "sensor.dishwasher_power"),
         ("Washing Machine", "sensor.washing_machine_power"),
         ("Tumble Dryer", "sensor.tumble_dryer_power"),
